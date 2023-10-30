@@ -1,14 +1,3 @@
-# backend storageaccount declaration to store the terraform state file. This should exist already.
-terraform {
-  backend "azurerm" {
-    #   subscription_id       = "da74xxxx-9c9a-xxxx-8fae-xxxxxxxxxxxx"
-    subscription_id      = "xxxxx"
-    resource_group_name  = "Blog_RG"
-    storage_account_name = "terraformbackend938" # Storage account used for backend
-    container_name       = "blogstate"
-    key                  = "terraform.tfstate" # Terraform State file
-  }
-}
 # Azurerm providers declaration
 terraform {
   required_providers {
@@ -21,7 +10,6 @@ terraform {
 }
 provider "azurerm" {
   alias                      = "coeauto"
-  subscription_id            = var.subscription_id
   skip_provider_registration = true
   features {}
 }
@@ -31,13 +19,6 @@ provider "azurerm" {
   skip_provider_registration = true
 }
 
-### Data source for KV - to retrive the secrets from KV, declaring the existing KV details.
-data "azurerm_key_vault" "kv_name" {
-  name                = var.devKV_Name
-  resource_group_name = "Blog_RG"
-}
-## To get object & tenant ID , declaring the data source. 
-data "azurerm_client_config" "current" {}
 
 #############################################################################
 
